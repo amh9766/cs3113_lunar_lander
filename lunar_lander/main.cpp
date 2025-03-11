@@ -26,10 +26,11 @@
 #include <vector>
 #include "Entity.h"
 #include "helper.h"
+#include "lunar_lib.h"
 
 // ————— CONSTANTS ————— //
-constexpr float INTERNAL_WIDTH  = 240.0f,
-                INTERNAL_HEIGHT = 160.0f;
+constexpr float INTERNAL_WIDTH  = 480.0f,
+                INTERNAL_HEIGHT = 320.0f;
 
 constexpr int WINDOW_WIDTH  = 960,
               WINDOW_HEIGHT = 640;
@@ -55,7 +56,6 @@ constexpr GLint LEVEL_OF_DETAIL    = 0;
 constexpr GLint TEXTURE_BORDER     = 0;
 
 constexpr float FIXED_TIMESTEP = 1.0f / 60.0f;
-constexpr float ACC_OF_GRAVITY = -9.81f;
 
 // ————— STRUCTS AND ENUMS —————//
 enum AppStatus { RUNNING, TERMINATED };
@@ -199,13 +199,13 @@ void process_input()
     const Uint8* key_state = SDL_GetKeyboardState(NULL);
 
     if (key_state[SDL_SCANCODE_LEFT])
-        applied_accel.x -= 15.0f;
+        applied_accel.x -= ACCEL_OF_PROPULSION;
     if (key_state[SDL_SCANCODE_RIGHT]) 
-        applied_accel.x += 15.0f;
+        applied_accel.x += ACCEL_OF_PROPULSION;
     if (key_state[SDL_SCANCODE_UP])
-        applied_accel.y -= 15.0f;
+        applied_accel.y -= ACCEL_OF_PROPULSION;
     if (key_state[SDL_SCANCODE_DOWN]) 
-        applied_accel.y += 15.0f;
+        applied_accel.y += ACCEL_OF_PROPULSION;
 
     g_game_state.player->set_acceleration(applied_accel);
 

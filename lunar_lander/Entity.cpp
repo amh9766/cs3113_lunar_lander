@@ -17,10 +17,12 @@
 #define GL_GLEXT_PROTOTYPES 1
 #include <SDL.h>
 #include <SDL_opengl.h>
+
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
 #include "Entity.h"
+#include "lunar_lib.h"
 #include "helper.h"
 
 Entity::Entity(glm::vec3 init_pos, glm::vec3 init_scale, 
@@ -50,8 +52,8 @@ void Entity::update_model_mat()
 void Entity::update(float delta_time)
 {
     // Add natural forces on entity
-    glm::vec3 gravity_accel = glm::vec3(0.0f, 2.0f, 0.0f);
-    glm::vec3 drag_accel = -0.2f * this->m_velocity;
+    glm::vec3 gravity_accel = glm::vec3(0.0f, ACCEL_OF_GRAVITY, 0.0f);
+    glm::vec3 drag_accel = -DRAG_COEFFICIENT * this->m_velocity;
 
     m_acceleration += gravity_accel + drag_accel;
     LOG(m_acceleration.y);
