@@ -51,12 +51,6 @@ void Entity::update_model_mat()
 
 void Entity::update(float delta_time)
 {
-    // Add natural forces on entity
-    glm::vec3 gravity_accel = glm::vec3(0.0f, ACCEL_OF_GRAVITY, 0.0f);
-    glm::vec3 drag_accel = -DRAG_COEFFICIENT * this->m_velocity;
-
-    m_acceleration += gravity_accel + drag_accel;
-
     // Apply resulting forces on entity
     m_velocity += m_acceleration * delta_time;
     m_position += m_velocity * delta_time;

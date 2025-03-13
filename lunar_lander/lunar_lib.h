@@ -14,5 +14,8 @@ constexpr float ACCEL_OF_GRAVITY = 2.5f,
                 ACCEL_OF_PROPULSION = 15.0f,
                 DRAG_COEFFICIENT = 0.25f;
 
+constexpr int FUEL_AMOUNT = 2500,
+              FUEL_USAGE = 1;
+
 #endif
 

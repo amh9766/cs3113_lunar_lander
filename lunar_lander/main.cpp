@@ -27,6 +27,7 @@
 #include "Entity.h"
 #include "AnimationInfo.h"
 #include "AnimatedEntity.h"
+#include "PlayerEntity.h"
 #include "helper.h"
 #include "lunar_lib.h"
 
@@ -64,7 +65,7 @@ enum AppStatus { RUNNING, TERMINATED };
 
 struct GameState
 {
-    AnimatedEntity* player;
+    PlayerEntity* player;
 };
 
 // ————— VARIABLES ————— //
@@ -153,17 +154,17 @@ void initialise()
     glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
 
     // ————— PLAYER ————— //
-    g_game_state.player = new AnimatedEntity(
+    g_game_state.player = new PlayerEntity(
         glm::vec3(120.0f, 80.0f, 0.0f),
         glm::vec3(24.0f, 20.0f, 0.0f),
         24,
         20,
         load_texture(PLAYER_FILEPATH),
         { 
-            { 8, 0 },
-            { 5, 1 },
-            { 5, 1 },
-            { 4, 0 } 
+            { 8, 0 }, // Idle
+            { 5, 1 }, // Up
+            { 5, 1 }, // Down
+            { 4, 0 }  // Horizontal
         },
         8
     );
@@ -177,7 +178,8 @@ void initialise()
 
 void process_input()
 {
-    glm::vec3 applied_accel = glm::vec3(0.0f);
+    // Reset any input-based forces
+    g_game_state.player->start_neutral();
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -207,41 +209,10 @@ void process_input()
 
     const Uint8* key_state = SDL_GetKeyboardState(NULL);
 
-    if (key_state[SDL_SCANCODE_LEFT])
-    {
-        applied_accel.x -= ACCEL_OF_PROPULSION;
-    }
-    if (key_state[SDL_SCANCODE_RIGHT]) 
-    {
-        applied_accel.x += ACCEL_OF_PROPULSION;
-    }
-    if (key_state[SDL_SCANCODE_UP])
-    {
-        applied_accel.y -= ACCEL_OF_PROPULSION;
-    }
-    if (key_state[SDL_SCANCODE_DOWN]) 
-    {
-        applied_accel.y += ACCEL_OF_PROPULSION;
-    }
-
-    if (applied_accel.x < 0.0f)
-        g_game_state.player->enable_x_flip();
-    else if (applied_accel.x > 0.0f)
-        g_game_state.player->disable_x_flip();
-
-    if (applied_accel.y < 0.0f)
-        g_game_state.player->set_anim(1);
-    else if (applied_accel.y > 0.0f)
-        g_game_state.player->set_anim(2);
-    else if (applied_accel.x != 0.0f)
-        g_game_state.player->set_anim(3);
-    else
-        g_game_state.player->set_anim(0);
-
-    g_game_state.player->set_acceleration(applied_accel);
-
-    // This makes sure that the player can't move faster diagonally
-    //if (glm::length(g_game_state.player->get_movement()) > 1.0f)
+    if (key_state[SDL_SCANCODE_LEFT])  g_game_state.player->push_left();
+    if (key_state[SDL_SCANCODE_RIGHT]) g_game_state.player->push_right();
+    if (key_state[SDL_SCANCODE_UP])    g_game_state.player->push_up();
+    if (key_state[SDL_SCANCODE_DOWN])  g_game_state.player->push_down();
 }
 
 void update()

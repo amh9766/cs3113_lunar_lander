@@ -26,7 +26,6 @@ class AnimatedEntity : public Entity
         AnimatedEntity(glm::vec3 init_pos, glm::vec3 init_scale, 
             float m_width, float m_height, 
             GLuint tex_id, std::vector<AnimationInfo> anim_frames, int max_frames);
-        ~AnimatedEntity();
 
         void update(float delta_time);
         void render(ShaderProgram *program);
