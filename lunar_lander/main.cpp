@@ -25,6 +25,8 @@
 #include <ctime>
 #include <vector>
 #include "Entity.h"
+#include "AnimationInfo.h"
+#include "AnimatedEntity.h"
 #include "helper.h"
 #include "lunar_lib.h"
 
@@ -62,7 +64,7 @@ enum AppStatus { RUNNING, TERMINATED };
 
 struct GameState
 {
-    Entity* player;
+    AnimatedEntity* player;
 };
 
 // ————— VARIABLES ————— //
@@ -151,12 +153,19 @@ void initialise()
     glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
 
     // ————— PLAYER ————— //
-    g_game_state.player = new Entity(
+    g_game_state.player = new AnimatedEntity(
         glm::vec3(120.0f, 80.0f, 0.0f),
-        glm::vec3(24.0f, 19.0f, 0.0f),
+        glm::vec3(24.0f, 20.0f, 0.0f),
         24,
-        19,
-        load_texture(PLAYER_FILEPATH)   
+        20,
+        load_texture(PLAYER_FILEPATH),
+        { 
+            { 8, 0 },
+            { 5, 1 },
+            { 5, 1 },
+            { 4, 0 } 
+        },
+        8
     );
     
     // ————— PLATFORM ————— //
@@ -199,13 +208,30 @@ void process_input()
     const Uint8* key_state = SDL_GetKeyboardState(NULL);
 
     if (key_state[SDL_SCANCODE_LEFT])
+    {
         applied_accel.x -= ACCEL_OF_PROPULSION;
+    }
     if (key_state[SDL_SCANCODE_RIGHT]) 
+    {
         applied_accel.x += ACCEL_OF_PROPULSION;
+    }
     if (key_state[SDL_SCANCODE_UP])
+    {
         applied_accel.y -= ACCEL_OF_PROPULSION;
+    }
     if (key_state[SDL_SCANCODE_DOWN]) 
+    {
         applied_accel.y += ACCEL_OF_PROPULSION;
+    }
+
+    if (applied_accel.y < 0.0f)
+        g_game_state.player->set_anim(1);
+    else if (applied_accel.y > 0.0f)
+        g_game_state.player->set_anim(2);
+    else if (applied_accel.x != 0.0f)
+        g_game_state.player->set_anim(3);
+    else
+        g_game_state.player->set_anim(0);
 
     g_game_state.player->set_acceleration(applied_accel);
 

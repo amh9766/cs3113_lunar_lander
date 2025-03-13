@@ -18,6 +18,7 @@
 		CA445B432D7B947300F3B966 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B3E2D7B947300F3B966 /* Entity.cpp */; };
 		CA445B452D7B948100F3B966 /* shaders in Copy Files */ = {isa = PBXBuildFile; fileRef = CA445B3C2D7B947300F3B966 /* shaders */; };
 		CA445B472D7DEA0800F3B966 /* content in Copy Files */ = {isa = PBXBuildFile; fileRef = CA445B462D7DE8DA00F3B966 /* content */; };
+		CA445B4A2D80E8BD00F3B966 /* AnimatedEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B482D80E8BD00F3B966 /* AnimatedEntity.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,9 @@
 		CA445B3C2D7B947300F3B966 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
 		CA445B3E2D7B947300F3B966 /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
 		CA445B462D7DE8DA00F3B966 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
+		CA445B482D80E8BD00F3B966 /* AnimatedEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedEntity.cpp; sourceTree = "<group>"; };
+		CA445B492D80E8BD00F3B966 /* AnimatedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedEntity.h; sourceTree = "<group>"; };
+		CA445B4B2D828A3300F3B966 /* AnimationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,9 @@
 		CA445B222D7B8E7700F3B966 /* lunar_lander */ = {
 			isa = PBXGroup;
 			children = (
+				CA445B4B2D828A3300F3B966 /* AnimationInfo.h */,
+				CA445B482D80E8BD00F3B966 /* AnimatedEntity.cpp */,
+				CA445B492D80E8BD00F3B966 /* AnimatedEntity.h */,
 				CA445B462D7DE8DA00F3B966 /* content */,
 				CA445B3E2D7B947300F3B966 /* Entity.cpp */,
 				CA445B382D7B947300F3B966 /* Entity.h */,
@@ -175,6 +182,7 @@
 			files = (
 				CA445B432D7B947300F3B966 /* Entity.cpp in Sources */,
 				CA445B402D7B947300F3B966 /* main.cpp in Sources */,
+				CA445B4A2D80E8BD00F3B966 /* AnimatedEntity.cpp in Sources */,
 				CA445B412D7B947300F3B966 /* ShaderProgram.cpp in Sources */,
 				CA445B422D7B947300F3B966 /* helper.cpp in Sources */,
 			);

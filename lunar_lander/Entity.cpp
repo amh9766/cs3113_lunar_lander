@@ -56,7 +56,6 @@ void Entity::update(float delta_time)
     glm::vec3 drag_accel = -DRAG_COEFFICIENT * this->m_velocity;
 
     m_acceleration += gravity_accel + drag_accel;
-    LOG(m_acceleration.y);
 
     // Apply resulting forces on entity
     m_velocity += m_acceleration * delta_time;
