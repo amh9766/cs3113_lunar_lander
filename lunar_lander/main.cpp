@@ -224,6 +224,11 @@ void process_input()
         applied_accel.y += ACCEL_OF_PROPULSION;
     }
 
+    if (applied_accel.x < 0.0f)
+        g_game_state.player->enable_x_flip();
+    else if (applied_accel.x > 0.0f)
+        g_game_state.player->disable_x_flip();
+
     if (applied_accel.y < 0.0f)
         g_game_state.player->set_anim(1);
     else if (applied_accel.y > 0.0f)

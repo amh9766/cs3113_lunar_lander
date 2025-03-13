@@ -19,6 +19,7 @@ class AnimatedEntity : public Entity
             m_anim_rows;
         int m_anim_index,
             m_curr_anim;
+        bool flip_horizontal;
 
     public:
         // ————— GENERAL ————— //
@@ -32,6 +33,8 @@ class AnimatedEntity : public Entity
 
         // ————— ANIMATION ————— //
         void set_anim(int anim);
+        void enable_x_flip() { this->flip_horizontal = true; }
+        void disable_x_flip() { this->flip_horizontal = false; }
 };
 
 #endif

@@ -34,7 +34,7 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos, glm::vec3 init_scale,
         width, height, 
         tex_id
       ),
-      m_anims(anims), m_anim_cols(max_frames)
+      m_anims(anims), m_anim_cols(max_frames), flip_horizontal(false)
 {
     this->m_anim_rows = (int) this->m_anims.size();
     this->set_anim(0);
@@ -82,17 +82,27 @@ void AnimatedEntity::render(ShaderProgram* program)
 
     float u = (float) (anim_index % this->m_anim_cols) * width;
     float v = (float) (anim_index / this->m_anim_cols) * height;
+
+    float left = u;
+    float right = u + width;
+
+    if (this->flip_horizontal)
+    {
+        float temp = left;
+        left = right;
+        right = temp;
+    }
         
     float texture_coordinates[] =
     {
         // Triangle 1
-        u, v + height,
-        u + width, v + height, 
-        u + width, v,
+        left, v + height,
+        right, v + height, 
+        right, v,
         // Triangle 2
-        u, v + height, 
-        u + width, v, 
-        u, v
+        left, v + height, 
+        right, v, 
+        left, v
     };
 
     glVertexAttribPointer(program->get_position_attribute(),
