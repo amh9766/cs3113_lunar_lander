@@ -20,6 +20,7 @@
 		CA445B472D7DEA0800F3B966 /* content in Copy Files */ = {isa = PBXBuildFile; fileRef = CA445B462D7DE8DA00F3B966 /* content */; };
 		CA445B4A2D80E8BD00F3B966 /* AnimatedEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B482D80E8BD00F3B966 /* AnimatedEntity.cpp */; };
 		CA445B4F2D83690900F3B966 /* PlayerEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B4E2D83690900F3B966 /* PlayerEntity.cpp */; };
+		CA445B522D85F6E800F3B966 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B502D85F6E800F3B966 /* UILabel.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,8 @@
 		CA445B4C2D83690900F3B966 /* PlayerEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerEntity.h; sourceTree = "<group>"; };
 		CA445B4D2D83690900F3B966 /* lunar_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lunar_lib.h; sourceTree = "<group>"; };
 		CA445B4E2D83690900F3B966 /* PlayerEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerEntity.cpp; sourceTree = "<group>"; };
+		CA445B502D85F6E800F3B966 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
+		CA445B512D85F6E800F3B966 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 		CA445B222D7B8E7700F3B966 /* lunar_lander */ = {
 			isa = PBXGroup;
 			children = (
+				CA445B502D85F6E800F3B966 /* UILabel.cpp */,
+				CA445B512D85F6E800F3B966 /* UILabel.h */,
 				CA445B4D2D83690900F3B966 /* lunar_lib.h */,
 				CA445B4E2D83690900F3B966 /* PlayerEntity.cpp */,
 				CA445B4C2D83690900F3B966 /* PlayerEntity.h */,
@@ -187,6 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA445B522D85F6E800F3B966 /* UILabel.cpp in Sources */,
 				CA445B432D7B947300F3B966 /* Entity.cpp in Sources */,
 				CA445B4F2D83690900F3B966 /* PlayerEntity.cpp in Sources */,
 				CA445B402D7B947300F3B966 /* main.cpp in Sources */,

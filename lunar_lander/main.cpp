@@ -28,6 +28,7 @@
 #include "AnimationInfo.h"
 #include "AnimatedEntity.h"
 #include "PlayerEntity.h"
+#include "UILabel.h"
 #include "helper.h"
 #include "lunar_lib.h"
 
@@ -52,7 +53,8 @@ constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
                F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
-constexpr char  PLAYER_FILEPATH[] = "content/player.png";
+constexpr char  PLAYER_FILEPATH[]   = "content/player.png",
+                ALPHANUM_FILEPATH[] = "content/alphanum.png";
 
 constexpr GLint NUMBER_OF_TEXTURES = 1;
 constexpr GLint LEVEL_OF_DETAIL    = 0;
@@ -66,6 +68,7 @@ enum AppStatus { RUNNING, TERMINATED };
 struct GameState
 {
     PlayerEntity* player;
+    UILabel* fuel_label;
 };
 
 // ————— VARIABLES ————— //
@@ -171,6 +174,16 @@ void initialise()
     
     // ————— PLATFORM ————— //
 
+    // ————— UI ————— //
+    GLuint alphanum_tex_id = load_texture(ALPHANUM_FILEPATH);
+    g_game_state.fuel_label = new UILabel(
+        glm::vec3(0.0f),
+        glm::vec3(12.0f, 14.0f, 0.0f),
+        alphanum_tex_id,
+        "FUEL",
+        4
+    );
+
     // ————— GENERAL ————— //
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -238,6 +251,7 @@ void update()
     while (delta_time >= FIXED_TIMESTEP)
     {
         g_game_state.player->update(FIXED_TIMESTEP);
+        g_game_state.fuel_label->update(g_game_state.player->get_fuel());
 
         delta_time -= FIXED_TIMESTEP;
     }
@@ -257,6 +271,7 @@ void render()
     g_game_state.player->render(&g_shader_program);
 
     // ————— PLATFORM ————— //
+    g_game_state.fuel_label->render(&g_shader_program);
 
     // ————— GENERAL ————— //
     glDisableVertexAttribArray(g_shader_program.get_position_attribute());
@@ -267,6 +282,9 @@ void render()
 
 void shutdown() 
 {
+    delete g_game_state.player;
+    delete g_game_state.fuel_label;
+
     SDL_Quit();
 }
 
