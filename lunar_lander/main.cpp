@@ -28,6 +28,7 @@
 #include "AnimationInfo.h"
 #include "AnimatedEntity.h"
 #include "PlayerEntity.h"
+#include "Background.h"
 #include "UILabel.h"
 #include "helper.h"
 #include "lunar_lib.h"
@@ -53,8 +54,9 @@ constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
                F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
-constexpr char  PLAYER_FILEPATH[]   = "content/player.png",
-                ALPHANUM_FILEPATH[] = "content/alphanum.png";
+constexpr char  PLAYER_FILEPATH[]     = "content/player.png",
+                ALPHANUM_FILEPATH[]   = "content/alphanum.png",
+                BACKGROUND_FILEPATH[] = "content/background.png";
 
 constexpr GLint NUMBER_OF_TEXTURES = 1;
 constexpr GLint LEVEL_OF_DETAIL    = 0;
@@ -69,6 +71,7 @@ struct GameState
 {
     PlayerEntity* player;
     UILabel* fuel_label;
+    Background* background;
 };
 
 // ————— VARIABLES ————— //
@@ -155,6 +158,13 @@ void initialise()
     glUseProgram(g_shader_program.get_program_id());
 
     glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
+
+    // ————— BACKGROUND ————— //
+    g_game_state.background = new Background(
+        INTERNAL_HEIGHT,
+        INTERNAL_WIDTH,
+        load_texture(BACKGROUND_FILEPATH)
+    );
 
     // ————— PLAYER ————— //
     g_game_state.player = new PlayerEntity(
@@ -266,6 +276,8 @@ void render()
 
     glEnableVertexAttribArray(g_shader_program.get_position_attribute());
     glEnableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
+
+    g_game_state.background->render(&g_shader_program);
 
     // ————— PLAYER ————— //
     g_game_state.player->render(&g_shader_program);

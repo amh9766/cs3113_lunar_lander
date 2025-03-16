@@ -21,6 +21,7 @@
 		CA445B4A2D80E8BD00F3B966 /* AnimatedEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B482D80E8BD00F3B966 /* AnimatedEntity.cpp */; };
 		CA445B4F2D83690900F3B966 /* PlayerEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B4E2D83690900F3B966 /* PlayerEntity.cpp */; };
 		CA445B522D85F6E800F3B966 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B502D85F6E800F3B966 /* UILabel.cpp */; };
+		CA445B552D873F4500F3B966 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA445B542D873F4500F3B966 /* Background.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,8 @@
 		CA445B4E2D83690900F3B966 /* PlayerEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerEntity.cpp; sourceTree = "<group>"; };
 		CA445B502D85F6E800F3B966 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
 		CA445B512D85F6E800F3B966 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
+		CA445B532D873F4400F3B966 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		CA445B542D873F4500F3B966 /* Background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 		CA445B222D7B8E7700F3B966 /* lunar_lander */ = {
 			isa = PBXGroup;
 			children = (
+				CA445B542D873F4500F3B966 /* Background.cpp */,
+				CA445B532D873F4400F3B966 /* Background.h */,
 				CA445B502D85F6E800F3B966 /* UILabel.cpp */,
 				CA445B512D85F6E800F3B966 /* UILabel.h */,
 				CA445B4D2D83690900F3B966 /* lunar_lib.h */,
@@ -199,6 +204,7 @@
 				CA445B4A2D80E8BD00F3B966 /* AnimatedEntity.cpp in Sources */,
 				CA445B412D7B947300F3B966 /* ShaderProgram.cpp in Sources */,
 				CA445B422D7B947300F3B966 /* helper.cpp in Sources */,
+				CA445B552D873F4500F3B966 /* Background.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
