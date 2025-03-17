@@ -40,6 +40,20 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos, glm::vec3 init_scale,
     this->set_anim(0);
 }
 
+AnimatedEntity::AnimatedEntity(glm::vec3 init_pos,
+    float width, float height, GLuint tex_id, 
+    std::vector<AnimationInfo> anims, int max_frames
+    )
+    : Entity(init_pos,
+        width, height, 
+        tex_id
+      ),
+      m_anims(anims), m_anim_cols(max_frames), flip_horizontal(false)
+{
+    this->m_anim_rows = (int) this->m_anims.size();
+    this->set_anim(0);
+}
+
 void AnimatedEntity::set_anim(int anim)
 {
     if (this->m_curr_anim != anim)

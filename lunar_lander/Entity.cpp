@@ -34,6 +34,15 @@ Entity::Entity(glm::vec3 init_pos, glm::vec3 init_scale,
 {
 }
 
+Entity::Entity(glm::vec3 init_pos, float width, float height, GLuint tex_id)
+    : m_position(init_pos), m_velocity(0.0f), m_acceleration(0.0f),
+      m_model_mat(IDENTITY_MAT), m_texture_id(tex_id),
+      m_width(width), m_height(height),
+      m_is_active(false)
+{
+    m_scale = glm::vec3(width, height, 0.0f);
+}
+
 Entity::~Entity()
 {
 }

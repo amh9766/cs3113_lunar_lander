@@ -31,6 +31,8 @@ class PlayerEntity : public AnimatedEntity
         PlayerEntity(glm::vec3 init_pos, glm::vec3 init_scale, 
             float m_width, float m_height, 
             GLuint tex_id, std::vector<AnimationInfo> anim_frames, int max_frames);
+        PlayerEntity(glm::vec3 init_pos, float m_width, float m_height, 
+            GLuint tex_id, std::vector<AnimationInfo> anim_frames, int max_frames);
 
         void update(float delta_time);
 

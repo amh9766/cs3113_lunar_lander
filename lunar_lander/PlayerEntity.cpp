@@ -39,6 +39,19 @@ PlayerEntity::PlayerEntity(glm::vec3 init_pos, glm::vec3 init_scale,
 {
 }
 
+PlayerEntity::PlayerEntity(glm::vec3 init_pos, 
+    float width, float height, GLuint tex_id, 
+    std::vector<AnimationInfo> anims, int max_frames
+    )
+    : AnimatedEntity(init_pos,
+        width, height, 
+        tex_id,
+        anims, max_frames
+      ),
+      m_propulsion(0.0f), m_fuel(FUEL_AMOUNT) 
+{
+}
+
 void PlayerEntity::update(float delta_time)
 {
     // Set initial acceleration to propulsion force 

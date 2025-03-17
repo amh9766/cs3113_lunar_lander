@@ -10,9 +10,14 @@
 #ifndef LUNAR_LIB_H
 #define LUNAR_LIB_H
 
+constexpr float INTERNAL_WIDTH  = 480.0f,
+                INTERNAL_HEIGHT = 320.0f;
+
 constexpr float ACCEL_OF_GRAVITY = 2.5f,
                 ACCEL_OF_PROPULSION = 15.0f,
                 DRAG_COEFFICIENT = 0.25f;
+
+constexpr float PLATFORM_SPEED = 20.0f;
 
 constexpr int FUEL_AMOUNT = 2500,
               FUEL_USAGE = 1;

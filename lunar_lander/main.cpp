@@ -28,15 +28,13 @@
 #include "AnimationInfo.h"
 #include "AnimatedEntity.h"
 #include "PlayerEntity.h"
+#include "PlatformEntity.h"
 #include "Background.h"
 #include "UILabel.h"
 #include "helper.h"
 #include "lunar_lib.h"
 
 // ————— CONSTANTS ————— //
-constexpr float INTERNAL_WIDTH  = 480.0f,
-                INTERNAL_HEIGHT = 320.0f;
-
 constexpr int WINDOW_WIDTH  = 960,
               WINDOW_HEIGHT = 640;
 
@@ -55,6 +53,7 @@ constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
 
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
 constexpr char  PLAYER_FILEPATH[]     = "content/player.png",
+                PLATFORM_FILEPATH[]   = "content/platform.png",
                 ALPHANUM_FILEPATH[]   = "content/alphanum.png",
                 BACKGROUND_FILEPATH[] = "content/background.png";
 
@@ -64,12 +63,15 @@ constexpr GLint TEXTURE_BORDER     = 0;
 
 constexpr float FIXED_TIMESTEP = 1.0f / 60.0f;
 
+constexpr int PLATFORM_COUNT = 3;
+
 // ————— STRUCTS AND ENUMS —————//
 enum AppStatus { RUNNING, TERMINATED };
 
 struct GameState
 {
     PlayerEntity* player;
+    std::vector<PlatformEntity> platforms;
     UILabel* fuel_label;
     Background* background;
 };
@@ -169,9 +171,8 @@ void initialise()
     // ————— PLAYER ————— //
     g_game_state.player = new PlayerEntity(
         glm::vec3(120.0f, 80.0f, 0.0f),
-        glm::vec3(24.0f, 20.0f, 0.0f),
-        24,
-        20,
+        24.0f,
+        20.0f,
         load_texture(PLAYER_FILEPATH),
         { 
             { 8, 0 }, // Idle
@@ -183,6 +184,34 @@ void initialise()
     );
     
     // ————— PLATFORM ————— //
+    GLuint platform_tex_id = load_texture(PLATFORM_FILEPATH);
+    g_game_state.platforms.emplace_back(
+            glm::vec3(204.0f, 45.0f, 0.0f),
+            64.0f,
+            32.0f,
+            3.0f,
+            8.0f,
+            platform_tex_id,
+            false
+        );
+    g_game_state.platforms.emplace_back(
+            glm::vec3(92.0f, 194.0f, 0.0f),
+            64.0f,
+            32.0f,
+            3.0f,
+            8.0f,
+            platform_tex_id,
+            false
+        );
+    g_game_state.platforms.emplace_back(
+            glm::vec3(342.0f, 245.0f, 0.0f),
+            64.0f,
+            32.0f,
+            3.0f,
+            8.0f,
+            platform_tex_id,
+            true 
+        );
 
     // ————— UI ————— //
     GLuint alphanum_tex_id = load_texture(ALPHANUM_FILEPATH);
@@ -263,6 +292,8 @@ void update()
         g_game_state.player->update(FIXED_TIMESTEP);
         g_game_state.fuel_label->update(g_game_state.player->get_fuel());
 
+        for (int i = 0; i < PLATFORM_COUNT; i++) g_game_state.platforms[i].update(delta_time);
+
         delta_time -= FIXED_TIMESTEP;
     }
 
@@ -281,6 +312,9 @@ void render()
 
     // ————— PLAYER ————— //
     g_game_state.player->render(&g_shader_program);
+
+
+    for (int i = 0; i < PLATFORM_COUNT; i++) g_game_state.platforms[i].render(&g_shader_program);
 
     // ————— PLATFORM ————— //
     g_game_state.fuel_label->render(&g_shader_program);

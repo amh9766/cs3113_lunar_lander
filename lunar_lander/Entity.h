@@ -40,6 +40,7 @@ class Entity
 
         // ————— GENERAL ————— //
         Entity(glm::vec3 init_pos, glm::vec3 init_scale, float m_width, float m_height, GLuint tex_id);
+        Entity(glm::vec3 init_pos, float m_width, float m_height, GLuint tex_id);
         ~Entity();
 
         virtual void update(float delta_time);
