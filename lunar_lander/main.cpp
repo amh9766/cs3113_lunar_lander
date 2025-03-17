@@ -183,35 +183,34 @@ void initialise()
         8
     );
     
-    // ————— PLATFORM ————— //
+    // ————— PLATFORMS ————— //
     GLuint platform_tex_id = load_texture(PLATFORM_FILEPATH);
     g_game_state.platforms.emplace_back(
-            glm::vec3(204.0f, 45.0f, 0.0f),
-            64.0f,
-            32.0f,
-            3.0f,
-            8.0f,
-            platform_tex_id,
-            false
-        );
+        glm::vec3(204.0f, 45.0f, 0.0f),
+        64.0f,
+        32.0f,
+        3.0f,
+        8.0f,
+        platform_tex_id
+    );
     g_game_state.platforms.emplace_back(
-            glm::vec3(92.0f, 194.0f, 0.0f),
-            64.0f,
-            32.0f,
-            3.0f,
-            8.0f,
-            platform_tex_id,
-            false
-        );
+        glm::vec3(92.0f, 194.0f, 0.0f),
+        64.0f,
+        32.0f,
+        3.0f,
+        8.0f,
+        platform_tex_id
+    );
     g_game_state.platforms.emplace_back(
-            glm::vec3(342.0f, 245.0f, 0.0f),
-            64.0f,
-            32.0f,
-            3.0f,
-            8.0f,
-            platform_tex_id,
-            true 
-        );
+        glm::vec3(342.0f, 245.0f, 0.0f),
+        64.0f,
+        32.0f,
+        3.0f,
+        8.0f,
+        platform_tex_id
+    );
+
+    g_game_state.platforms[2].set_dynamic();
 
     // ————— UI ————— //
     GLuint alphanum_tex_id = load_texture(ALPHANUM_FILEPATH);

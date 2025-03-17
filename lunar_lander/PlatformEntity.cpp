@@ -25,17 +25,15 @@
 #include "lunar_lib.h"
 
 PlatformEntity::PlatformEntity(glm::vec3 position, float width, float height, 
-    float x_offset, float y_offset, GLuint texture_id, bool active)
+    float x_offset, float y_offset, GLuint texture_id)
     : Entity(position, width, height, texture_id),
       m_x_offset(x_offset), m_y_offset(y_offset)
 {
-    m_is_active = active;
-    if (m_is_active) m_velocity.x = -PLATFORM_SPEED;
 }
 
 void PlatformEntity::update(float delta_time)
 {
-    if (m_is_active)
+    if (m_is_moving)
     {
         if (m_position.x < 0.0f) m_velocity.x = PLATFORM_SPEED;
         else if (m_position.x + m_width > INTERNAL_WIDTH) m_velocity.x = -PLATFORM_SPEED;
