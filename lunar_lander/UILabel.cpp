@@ -85,6 +85,12 @@ UILabel::UILabel(glm::vec3 position, glm::vec3 scale, GLuint texture_id, std::st
         m_texture_coordinates[index + 10] = u;
         m_texture_coordinates[index + 11] = 0.0f;
     }
+
+    // Zero UV-coordinates of unused triangles
+    for (int i = m_label_length * 12; i < 12; i++)
+    {
+        m_texture_coordinates[i] = 0.0f;
+    }
 }
 
 UILabel::~UILabel()
