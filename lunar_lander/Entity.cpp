@@ -49,12 +49,12 @@ Entity::~Entity()
 
 void Entity::update_model_mat()
 {
-    this->m_model_mat = glm::scale(
+    m_model_mat = glm::scale(
         glm::translate(
             IDENTITY_MAT,
-            this->m_position
+            m_position
         ),
-        this->m_scale 
+        m_scale 
     );
 }
 
@@ -65,13 +65,13 @@ void Entity::update(float delta_time)
     m_position += m_velocity * delta_time;
 
     // Update model matrix
-    this->update_model_mat();
+    update_model_mat();
 }
 
 void Entity::render(ShaderProgram* program)
 {
-    program->set_model_matrix(this->m_model_mat);
-    glBindTexture(GL_TEXTURE_2D, this->m_texture_id);
+    program->set_model_matrix(m_model_mat);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id);
 
     glVertexAttribPointer(program->get_position_attribute(),
         2, GL_FLOAT, false, 0, STANDARD_COORDINATES);

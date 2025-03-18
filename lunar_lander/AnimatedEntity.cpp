@@ -36,8 +36,8 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos, glm::vec3 init_scale,
       ),
       m_anims(anims), m_anim_cols(max_frames), m_flip_horizontal(false)
 {
-    this->m_anim_rows = (int) this->m_anims.size();
-    this->set_anim(0);
+    m_anim_rows = (int) m_anims.size();
+    set_anim(0);
 }
 
 AnimatedEntity::AnimatedEntity(glm::vec3 init_pos,
@@ -50,17 +50,17 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos,
       ),
       m_anims(anims), m_anim_cols(max_frames), m_flip_horizontal(false)
 {
-    this->m_anim_rows = (int) this->m_anims.size();
-    this->set_anim(0);
+    m_anim_rows = (int) m_anims.size();
+    set_anim(0);
 }
 
 void AnimatedEntity::set_anim(int anim)
 {
-    if (this->m_curr_anim != anim)
+    if (m_curr_anim != anim)
     {
-        this->m_anim_time = 0.0f;
-        this->m_curr_anim = anim;
-        this->m_anim_index = 0;
+        m_anim_time = 0.0f;
+        m_curr_anim = anim;
+        m_anim_index = 0;
     }
 }
 
@@ -69,7 +69,7 @@ void AnimatedEntity::update(float delta_time)
     m_anim_time += delta_time;
     float frames_per_second = 0.05f;
 
-    AnimationInfo curr_anim = this->m_anims[this->m_curr_anim];
+    AnimationInfo curr_anim = m_anims[m_curr_anim];
 
     int num_of_frames = curr_anim.total_frames;
     
@@ -86,16 +86,16 @@ void AnimatedEntity::update(float delta_time)
 
 void AnimatedEntity::render(ShaderProgram* program)
 {
-    program->set_model_matrix(this->m_model_mat);
-    glBindTexture(GL_TEXTURE_2D, this->m_texture_id); 
+    program->set_model_matrix(m_model_mat);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id); 
 
-    int anim_index = this->m_curr_anim * this->m_anim_cols + this->m_anim_index;
+    int anim_index = m_curr_anim * m_anim_cols + m_anim_index;
 
-    float width = 1.0f / (float) this->m_anim_cols;
-    float height = 1.0f / (float) this->m_anim_rows;
+    float width = 1.0f / (float) m_anim_cols;
+    float height = 1.0f / (float) m_anim_rows;
 
-    float u = (float) (anim_index % this->m_anim_cols) * width;
-    float v = (float) (anim_index / this->m_anim_cols) * height;
+    float u = (float) (anim_index % m_anim_cols) * width;
+    float v = (float) (anim_index / m_anim_cols) * height;
 
     float left = u;
     float right = u + width;
