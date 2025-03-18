@@ -63,8 +63,6 @@ constexpr GLint TEXTURE_BORDER     = 0;
 
 constexpr float FIXED_TIMESTEP = 1.0f / 60.0f;
 
-constexpr int PLATFORM_COUNT = 3;
-
 // ————— STRUCTS AND ENUMS —————//
 enum AppStatus { RUNNING, TERMINATED };
 
@@ -189,7 +187,7 @@ void initialise()
         glm::vec3(204.0f, 45.0f, 0.0f),
         64.0f,
         32.0f,
-        3.0f,
+        10.0f,
         8.0f,
         platform_tex_id
     );
@@ -197,7 +195,7 @@ void initialise()
         glm::vec3(92.0f, 194.0f, 0.0f),
         64.0f,
         32.0f,
-        3.0f,
+        10.0f,
         8.0f,
         platform_tex_id
     );
@@ -205,7 +203,7 @@ void initialise()
         glm::vec3(342.0f, 245.0f, 0.0f),
         64.0f,
         32.0f,
-        3.0f,
+        10.0f,
         8.0f,
         platform_tex_id
     );
@@ -288,10 +286,11 @@ void update()
     //         objects' update function invocation
     while (delta_time >= FIXED_TIMESTEP)
     {
-        g_game_state.player->update(FIXED_TIMESTEP);
-        g_game_state.fuel_label->update(g_game_state.player->get_fuel());
+        for (int i = 0; i < g_game_state.platforms.size(); i++)
+            g_game_state.platforms[i].update(delta_time);
 
-        for (int i = 0; i < PLATFORM_COUNT; i++) g_game_state.platforms[i].update(delta_time);
+        g_game_state.player->update(FIXED_TIMESTEP, g_game_state.platforms);
+        g_game_state.fuel_label->update(g_game_state.player->get_fuel());
 
         delta_time -= FIXED_TIMESTEP;
     }
@@ -313,7 +312,8 @@ void render()
     g_game_state.player->render(&g_shader_program);
 
 
-    for (int i = 0; i < PLATFORM_COUNT; i++) g_game_state.platforms[i].render(&g_shader_program);
+    for (int i = 0; i < g_game_state.platforms.size(); i++)
+        g_game_state.platforms[i].render(&g_shader_program);
 
     // ————— PLATFORM ————— //
     g_game_state.fuel_label->render(&g_shader_program);

@@ -20,6 +20,11 @@ class PlatformEntity : public Entity
 
         void set_dynamic() { m_is_moving = true; m_velocity.x = PLATFORM_SPEED; }
         void set_static()  { m_is_moving = false; m_velocity = glm::vec3(0.0f); }
+
+        float calculate_left_overlap(float x, float width)  { return m_position.x + m_x_offset - (x + width); }
+        float calculate_right_overlap(float x)              { return m_position.x + m_width - m_x_offset - x; }
+        float calculate_top_overlap(float y, float height)  { return m_position.y + m_y_offset - (y + height); }
+        float calculate_bottom_overlap(float y)             { return m_position.y + m_height - m_y_offset - y; }
 };
 
 #endif
