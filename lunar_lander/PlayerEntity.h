@@ -32,17 +32,27 @@ class PlayerEntity : public AnimatedEntity
     public:
         // ————— GETTERS ————— //
         int const get_fuel() const { return m_fuel; }
+        bool const get_collide_bottom() const { return m_collide_bottom; }
 
         // ————— GENERAL ————— //
-        PlayerEntity(glm::vec3 init_pos, glm::vec3 init_scale, 
+        PlayerEntity(glm::vec3 init_scale, 
             float m_width, float m_height, 
             GLuint tex_id, std::vector<AnimationInfo> anim_frames, int max_frames);
-        PlayerEntity(glm::vec3 init_pos, float m_width, float m_height, 
+        PlayerEntity(float m_width, float m_height, 
             GLuint tex_id, std::vector<AnimationInfo> anim_frames, int max_frames);
 
         void update(float delta_time, std::vector<PlatformEntity>& platforms);
 
         // ————— GAMEPLAY ————— //
+        void reset()
+        {
+            m_position = SPAWN_POINT;
+            m_velocity = glm::vec3(0.0f);
+            m_acceleration = glm::vec3(0.0f);
+
+            m_fuel = FUEL_AMOUNT; 
+        }
+
         void use_fuel() { if (m_fuel > 0) m_fuel -= FUEL_USAGE; }
 
         // ————— PHYSICS ————— //
@@ -62,6 +72,7 @@ class PlayerEntity : public AnimatedEntity
         }
 
         void collides_with(glm::vec3& prev_position, PlatformEntity& platform);
+        bool is_out_of_bounds();
 
         // ————— ANIMATION ————— //
         void update_anim();

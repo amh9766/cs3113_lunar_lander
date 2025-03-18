@@ -10,6 +10,12 @@
 #ifndef LUNAR_LIB_H
 #define LUNAR_LIB_H
 
+#include "glm/glm.hpp"
+
+constexpr glm::vec3 SPAWN_POINT = glm::vec3(120.0f, 80.0f, 0.0f);
+
+constexpr float BOUND = 100.0f;
+
 constexpr float INTERNAL_WIDTH  = 480.0f,
                 INTERNAL_HEIGHT = 320.0f;
 

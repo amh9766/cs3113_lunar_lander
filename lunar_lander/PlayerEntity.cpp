@@ -27,11 +27,11 @@
 #include "lunar_lib.h"
 #include "helper.h"
 
-PlayerEntity::PlayerEntity(glm::vec3 init_pos, glm::vec3 init_scale, 
+PlayerEntity::PlayerEntity(glm::vec3 init_scale, 
     float width, float height, GLuint tex_id, 
     std::vector<AnimationInfo> anims, int max_frames
     )
-    : AnimatedEntity(init_pos, init_scale,
+    : AnimatedEntity(SPAWN_POINT, init_scale,
         width, height, 
         tex_id,
         anims, max_frames
@@ -40,11 +40,10 @@ PlayerEntity::PlayerEntity(glm::vec3 init_pos, glm::vec3 init_scale,
 {
 }
 
-PlayerEntity::PlayerEntity(glm::vec3 init_pos, 
-    float width, float height, GLuint tex_id, 
+PlayerEntity::PlayerEntity(float width, float height, GLuint tex_id, 
     std::vector<AnimationInfo> anims, int max_frames
     )
-    : AnimatedEntity(init_pos,
+    : AnimatedEntity(SPAWN_POINT,
         width, height, 
         tex_id,
         anims, max_frames
@@ -103,6 +102,14 @@ void PlayerEntity::collides_with(glm::vec3& prev_position, PlatformEntity& platf
             if (m_velocity.y > 0.0f) m_velocity.y = 0.0f;
         }
     }
+}
+
+bool PlayerEntity::is_out_of_bounds()
+{
+    return (m_position.x < -BOUND) || 
+           ((m_position.x + m_width) > (INTERNAL_WIDTH + BOUND)) ||
+           (m_position.y < -BOUND) ||
+           ((m_position.y + m_height) > (INTERNAL_HEIGHT + BOUND));
 }
 
 void PlayerEntity::update(float delta_time, std::vector<PlatformEntity>& platforms)

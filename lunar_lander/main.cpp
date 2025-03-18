@@ -52,10 +52,12 @@ constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
                F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
-constexpr char  PLAYER_FILEPATH[]     = "content/player.png",
-                PLATFORM_FILEPATH[]   = "content/platform.png",
-                ALPHANUM_FILEPATH[]   = "content/alphanum.png",
-                BACKGROUND_FILEPATH[] = "content/background.png";
+constexpr char  PLAYER_FILEPATH[]       = "content/player.png",
+                PLATFORM_FILEPATH[]     = "content/platform.png",
+                ALPHANUM_FILEPATH[]     = "content/alphanum.png",
+                BACKGROUND_FILEPATH[]   = "content/background.png",
+                MISSION_WON_FILEPATH[]  = "content/mission_won.png",
+                MISSION_LOSS_FILEPATH[] = "content/mission_loss.png";
 
 constexpr GLint NUMBER_OF_TEXTURES = 1;
 constexpr GLint LEVEL_OF_DETAIL    = 0;
@@ -72,6 +74,8 @@ struct GameState
     std::vector<PlatformEntity> platforms;
     UILabel* fuel_label;
     Background* background;
+    Background* mission_won;
+    Background* mission_loss;
 };
 
 // ————— VARIABLES ————— //
@@ -85,6 +89,10 @@ glm::mat4 g_view_matrix, g_projection_matrix;
 
 float g_previous_ticks   = 0.0f;
 float g_time_accumulator = 0.0f;
+
+bool g_pause = false,
+     g_won = false,
+     g_lost = false;
 
 // ———— GENERAL FUNCTIONS ———— //
 GLuint load_texture(const char* filepath);
@@ -166,9 +174,20 @@ void initialise()
         load_texture(BACKGROUND_FILEPATH)
     );
 
+    g_game_state.mission_won = new Background(
+        INTERNAL_HEIGHT,
+        INTERNAL_WIDTH,
+        load_texture(MISSION_WON_FILEPATH)
+    );
+
+    g_game_state.mission_loss = new Background(
+        INTERNAL_HEIGHT,
+        INTERNAL_WIDTH,
+        load_texture(MISSION_LOSS_FILEPATH)
+    );
+
     // ————— PLAYER ————— //
     g_game_state.player = new PlayerEntity(
-        glm::vec3(120.0f, 80.0f, 0.0f),
         24.0f,
         20.0f,
         load_texture(PLAYER_FILEPATH),
@@ -246,7 +265,15 @@ void process_input()
                 // Quit the game with a keystroke
                 g_app_status = TERMINATED;
                 break;
-
+            case SDLK_RETURN:
+                if (g_won || g_lost) 
+                {
+                    g_game_state.player->reset();
+                    g_won = false;
+                    g_lost = false;
+                }
+                else g_pause = !g_pause;
+                break;
             default:
                 break;
             }
@@ -271,31 +298,35 @@ void update()
     float delta_time = ticks - g_previous_ticks;
     g_previous_ticks = ticks;
 
-    // ————— FIXED TIMESTEP ————— //
-    // STEP 1: Keep track of how much time has passed since last step
-    delta_time += g_time_accumulator;
-
-    // STEP 2: Accumulate the ammount of time passed while we're under our fixed timestep
-    if (delta_time < FIXED_TIMESTEP)
+    if (!(g_won || g_lost) && !g_pause)
     {
+        // ————— FIXED TIMESTEP ————— //
+        delta_time += g_time_accumulator;
+
+        if (delta_time < FIXED_TIMESTEP)
+        {
+            g_time_accumulator = delta_time;
+            return;
+        }
+
+        while (delta_time >= FIXED_TIMESTEP)
+        {
+            g_won  = g_game_state.player->get_collide_bottom();
+            g_lost = g_game_state.player->is_out_of_bounds();
+
+            for (int i = 0; i < g_game_state.platforms.size(); i++)
+                g_game_state.platforms[i].update(delta_time);
+
+            g_game_state.player->update(FIXED_TIMESTEP, g_game_state.platforms);
+            g_game_state.fuel_label->update(g_game_state.player->get_fuel());
+
+            if (g_won || g_lost) break;
+
+            delta_time -= FIXED_TIMESTEP;
+        }
+
         g_time_accumulator = delta_time;
-        return;
     }
-
-    // STEP 3: Once we exceed our fixed timestep, apply that elapsed time into the 
-    //         objects' update function invocation
-    while (delta_time >= FIXED_TIMESTEP)
-    {
-        for (int i = 0; i < g_game_state.platforms.size(); i++)
-            g_game_state.platforms[i].update(delta_time);
-
-        g_game_state.player->update(FIXED_TIMESTEP, g_game_state.platforms);
-        g_game_state.fuel_label->update(g_game_state.player->get_fuel());
-
-        delta_time -= FIXED_TIMESTEP;
-    }
-
-    g_time_accumulator = delta_time;
 }
 
 void render()
@@ -311,12 +342,14 @@ void render()
     // ————— PLAYER ————— //
     g_game_state.player->render(&g_shader_program);
 
-
     for (int i = 0; i < g_game_state.platforms.size(); i++)
         g_game_state.platforms[i].render(&g_shader_program);
 
     // ————— PLATFORM ————— //
     g_game_state.fuel_label->render(&g_shader_program);
+
+    if      (g_won)  g_game_state.mission_won->render(&g_shader_program);
+    else if (g_lost) g_game_state.mission_loss->render(&g_shader_program);
 
     // ————— GENERAL ————— //
     glDisableVertexAttribArray(g_shader_program.get_position_attribute());
@@ -329,6 +362,10 @@ void shutdown()
 {
     delete g_game_state.player;
     delete g_game_state.fuel_label;
+
+    delete g_game_state.background;
+    delete g_game_state.mission_won;
+    delete g_game_state.mission_loss;
 
     SDL_Quit();
 }

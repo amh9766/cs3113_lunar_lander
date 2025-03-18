@@ -69,6 +69,7 @@
 		CA445B542D873F4500F3B966 /* Background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
 		CA445B562D87915800F3B966 /* PlatformEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformEntity.cpp; sourceTree = "<group>"; };
 		CA445B572D87915800F3B966 /* PlatformEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformEntity.h; sourceTree = "<group>"; };
+		CA445B592D89457900F3B966 /* helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +108,7 @@
 		CA445B222D7B8E7700F3B966 /* lunar_lander */ = {
 			isa = PBXGroup;
 			children = (
+				CA445B592D89457900F3B966 /* helper.h */,
 				CA445B562D87915800F3B966 /* PlatformEntity.cpp */,
 				CA445B572D87915800F3B966 /* PlatformEntity.h */,
 				CA445B542D873F4500F3B966 /* Background.cpp */,
