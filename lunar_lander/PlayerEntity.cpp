@@ -60,43 +60,47 @@ void PlayerEntity::collides_with(glm::vec3& prev_position, PlatformEntity& platf
     float top_overlap    = platform.calculate_top_overlap(m_position.y, m_height);
     float bottom_overlap = platform.calculate_bottom_overlap(m_position.y);
     
-    bool collide_left = left_overlap <= 0.0f;
-    bool collide_right = right_overlap >= 0.0f;
-    bool collide_top = top_overlap <= 0.0f;
-    bool collide_bottom = bottom_overlap >= 0.0f;
+    bool right = left_overlap < 0.0f;
+    bool left = right_overlap > 0.0f;
+    bool bottom = top_overlap < 0.0f;
+    bool top = bottom_overlap > 0.0f;
 
-    bool init_collide_left   = platform.calculate_left_overlap(prev_position.x, m_width) <= 0.0f;
-    bool init_collide_right  = platform.calculate_right_overlap(prev_position.x) >= 0.0f;
-    bool init_collide_top    = platform.calculate_top_overlap(prev_position.y, m_height) <= 0.0f;
-    bool init_collide_bottom = platform.calculate_bottom_overlap(prev_position.y) >= 0.0f;
+    bool prev_right   =  platform.calculate_left_overlap(prev_position.x, m_width) < 0.0f;
+    bool prev_left    =  platform.calculate_right_overlap(prev_position.x) > 0.0f;
+    bool prev_bottom  =  platform.calculate_top_overlap(prev_position.y, m_height) < 0.0f;
+    bool prev_top     =  platform.calculate_bottom_overlap(prev_position.y) > 0.0f;
 
-    if (collide_left && collide_right && collide_top && collide_bottom)
+    if (left && right && top && bottom)
     {
-        m_collide_left = collide_left != init_collide_left;
-        m_collide_right = collide_right != init_collide_right;
-        m_collide_top = collide_top != init_collide_top;
-        m_collide_bottom = collide_bottom != init_collide_bottom;
+        m_collide_left = left != prev_left;
+        m_collide_right = right != prev_right;
+        m_collide_top = top != prev_top;
+        m_collide_bottom = bottom != prev_bottom;
 
         if (m_collide_left)
         {
-            m_position.x = prev_position.x;
+            m_position.x = prev_position.x + right_overlap;
             if (m_acceleration.x < 0.0f) m_acceleration.x = 0.0f;
+            if (m_velocity.x < 0.0f) m_velocity.x = 0.0f;
 
         }
         if (m_collide_right)
         {
-            m_position.x = prev_position.x;
+            m_position.x = prev_position.x + left_overlap;
             if (m_acceleration.x > 0.0f) m_acceleration.x = 0.0f;
+            if (m_velocity.x > 0.0f) m_velocity.x = 0.0f;
         }
         if (m_collide_top) 
         {
-            m_position.y = prev_position.y;
+            m_position.y = prev_position.y + bottom_overlap;
             if (m_acceleration.y < 0.0f) m_acceleration.y = 0.0f;
+            if (m_velocity.y < 0.0f) m_velocity.y = 0.0f;
         }
         if (m_collide_bottom)
         {
-            m_position.y = prev_position.y;
+            m_position.y = prev_position.y + top_overlap;
             if (m_acceleration.y > 0.0f) m_acceleration.y = 0.0f;
+            if (m_velocity.y > 0.0f) m_velocity.y = 0.0f;
         }
     }
 }
