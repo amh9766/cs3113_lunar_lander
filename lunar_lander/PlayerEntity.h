@@ -9,9 +9,9 @@
 
 enum PlayerAnim : int
 {
-    IDLE = 0,
-    UP = 1,
-    DOWN = 2,
+    IDLE       = 0,
+    UP         = 1,
+    DOWN       = 2,
     HORIZONTAL = 3
 };
 
@@ -31,7 +31,7 @@ class PlayerEntity : public AnimatedEntity
 
     public:
         // ————— GETTERS ————— //
-        int const get_fuel() const { return m_fuel; }
+        int  const get_fuel()           const { return m_fuel; }
         bool const get_collide_bottom() const { return m_collide_bottom; }
 
         // ————— GENERAL ————— //
@@ -63,6 +63,7 @@ class PlayerEntity : public AnimatedEntity
         void push_up()       { if (m_fuel > 0) { m_propulsion.y -= 1.0f; use_fuel(); } }
         void push_down()     { if (m_fuel > 0) { m_propulsion.y += 1.0f; use_fuel(); } }
 
+        // ————— COLLISIONS ————— //
         void reset_collision()
         {
             m_collide_bottom = false; 

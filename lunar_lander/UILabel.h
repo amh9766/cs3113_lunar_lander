@@ -9,6 +9,7 @@
 class UILabel
 {
     private:
+        // ————— DRAWING ————— //
         glm::mat4 m_model_mat;
         float* m_vertices,
              * m_texture_coordinates;
@@ -18,6 +19,7 @@ class UILabel
             m_num_length;
 
     public:
+        // ————— GENERAL ————— //
         UILabel(glm::vec3 position, glm::vec3 scale, GLuint texture_id, std::string label, int num_length);
         ~UILabel();
 

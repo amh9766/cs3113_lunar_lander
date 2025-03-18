@@ -1,7 +1,7 @@
 /**
-* Author: Amani Hernandez 
+* Author: Amani Hernandez (amh9766)
 * Assignment: Lunar Lander
-* Date due: 2025-3-15, 11:59pm
+* Date due: 2025-3-18, 11:59pm
 * I pledge that I have completed this assignment without
 * collaborating with anyone else, in conformance with the
 * NYU School of Engineering Policies and Procedures on
@@ -34,7 +34,7 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos, glm::vec3 init_scale,
         width, height, 
         tex_id
       ),
-      m_anims(anims), m_anim_cols(max_frames), flip_horizontal(false)
+      m_anims(anims), m_anim_cols(max_frames), m_flip_horizontal(false)
 {
     this->m_anim_rows = (int) this->m_anims.size();
     this->set_anim(0);
@@ -48,7 +48,7 @@ AnimatedEntity::AnimatedEntity(glm::vec3 init_pos,
         width, height, 
         tex_id
       ),
-      m_anims(anims), m_anim_cols(max_frames), flip_horizontal(false)
+      m_anims(anims), m_anim_cols(max_frames), m_flip_horizontal(false)
 {
     this->m_anim_rows = (int) this->m_anims.size();
     this->set_anim(0);
@@ -100,7 +100,7 @@ void AnimatedEntity::render(ShaderProgram* program)
     float left = u;
     float right = u + width;
 
-    if (this->flip_horizontal)
+    if (m_flip_horizontal)
     {
         float temp = left;
         left = right;

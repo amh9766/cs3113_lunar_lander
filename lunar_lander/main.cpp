@@ -1,7 +1,7 @@
 /**
-* Author: Amani Hernandez 
+* Author: Amani Hernandez (amh9766)
 * Assignment: Lunar Lander
-* Date due: 2025-3-15, 11:59pm
+* Date due: 2025-3-18, 11:59pm
 * I pledge that I have completed this assignment without
 * collaborating with anyone else, in conformance with the
 * NYU School of Engineering Policies and Procedures on
@@ -52,6 +52,12 @@ constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
                F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
+
+// Sources:
+//      Player     - https://www.spriters-resource.com/ds_dsi/kirbysqueaksquad/sheet/2505/
+//      Background - https://www.spriters-resource.com/game_boy_advance/kirbynim/sheet/2976/
+//      Platform   - https://www.spriters-resource.com/game_boy_advance/kirbynim/sheet/134385/
+//      Font       - https://www.spriters-resource.com/ds_dsi/kirbysqueaksquad/sheet/3337/
 constexpr char  PLAYER_FILEPATH[]       = "content/player.png",
                 PLATFORM_FILEPATH[]     = "content/platform.png",
                 ALPHANUM_FILEPATH[]     = "content/alphanum.png",
@@ -71,11 +77,13 @@ enum AppStatus { RUNNING, TERMINATED };
 struct GameState
 {
     PlayerEntity* player;
-    std::vector<PlatformEntity> platforms;
     UILabel* fuel_label;
+
     Background* background;
     Background* mission_won;
     Background* mission_loss;
+
+    std::vector<PlatformEntity> platforms;
 };
 
 // ————— VARIABLES ————— //
